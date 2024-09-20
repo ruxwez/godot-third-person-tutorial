@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://ch6tlxfv61x7e"]
+
+[ext_resource type="Texture2D" uid="uid://c8arnlq67qi7" path="res://assets/textures/grids/Dark/texture_05.png" id="1_xqqdy"]
+[ext_resource type="Texture2D" uid="uid://b58xv1joypxo5" path="res://assets/textures/grids/Orange/texture_09.png" id="2_ibnjn"]
+[ext_resource type="PackedScene" uid="uid://3pcyddemmkpv" path="res://scenes/player.tscn" id="3_u3xeb"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tetw0"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_4xdfq"]
+sky_material = SubResource("ProceduralSkyMaterial_tetw0")
+
+[sub_resource type="Environment" id="Environment_r3644"]
+background_mode = 2
+sky = SubResource("Sky_4xdfq")
+tonemap_mode = 2
+sdfgi_enabled = true
+glow_enabled = true
+fog_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w4asm"]
+albedo_texture = ExtResource("1_xqqdy")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_adydb"]
+albedo_texture = ExtResource("2_ibnjn")
+
+[node name="Wold" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r3644")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Floor" type="CSGBox3D" parent="Map"]
+material_override = SubResource("StandardMaterial3D_w4asm")
+use_collision = true
+size = Vector3(30, 0.1, 30)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.558798, -3.08428)
+material_override = SubResource("StandardMaterial3D_adydb")
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.43533, 0.558798, 0.756356)
+material_override = SubResource("StandardMaterial3D_adydb")
+use_collision = true
+
+[node name="Player" parent="." instance=ExtResource("3_u3xeb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100192, 0)
